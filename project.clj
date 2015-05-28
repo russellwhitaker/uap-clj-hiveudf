@@ -1,4 +1,4 @@
-(defproject uap-clj-hiveudf "0.3.0"
+(defproject uap-clj-hiveudf "1.0.0"
   :description "Apache Hadoop Hive SimpleUDF wrapper around uap-clj"
   :url "https://github.com/russellwhitaker/uap-clj-hiveudf"
   :license {:name "The MIT License (MIT)"
@@ -6,7 +6,7 @@
   :scm {:name "git"
         :url "https://github.com/russellwhitaker/uap-clj-hiveudf"}
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [uap-clj "0.3.0"]]
+                 [uap-clj "1.0.0"]]
   :profiles {:provided
               {:dependencies
                  [[org.apache.hive/hive-exec "0.12.0"]
