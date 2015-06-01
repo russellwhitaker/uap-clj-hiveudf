@@ -1,22 +1,18 @@
 # uap-clj-hiveudf
 
-An Apache Hadoop Hive Simple UDF wrapper around the [`uap-clj`](https://github.com/russellwhitaker/uap-clj) library providing Browser and OS field extraction functions for:
-
-1. family
-2. major number
-3. minor number
-4. patch level
+An Apache Hadoop Hive Simple UDF wrapper around the [`uap-clj`](https://github.com/russellwhitaker/uap-clj) library providing Browser, O/S, and Device field extraction functions.
 
 ##Setup
 
 ```bash
 → lein clean && lein uberjar
-Retrieving uap-clj/uap-clj/0.2.0/uap-clj-0.3.0.pom from clojars
-Retrieving uap-clj/uap-clj/0.2.0/uap-clj-0.3.0.jar from clojars
+Retrieving uap-clj/uap-clj/1.0.0/uap-clj-1.0.0.pom from clojars
+Retrieving uap-clj/uap-clj/1.0.0/uap-clj-1.0.0.jar from clojars
 Compiling uap-clj.udf.hive.browser
 Compiling uap-clj.udf.hive.os
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-0.3.0.jar
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-0.3.0-standalone.jar
+Compiling uap-clj.udf.hive.device
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.0.jar
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.0-standalone.jar
 ```
 
 Copy one or both of these artifacts to a preferred location in HDFS (e.g. `hdfs:///shared/jars`).
@@ -27,7 +23,7 @@ minimizing setup hassle.
 
 ###Java and Hive version dependencies
 
-This code has been tested and shown to run under Hive commandline versions 0.12.0 and 0.14.0 when compiled under Java v1.7 (Mac OS X v10.9.5):
+This code has been tested and shown to run under Hive commandline versions 0.12.0 and 0.14.0 when compiled under Java v1.7 (Mac OS X v10.10.3):
 
 ```bash
 → java -version
@@ -40,12 +36,12 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.51-b03, mixed mode)
 
 ```bash
 hive> list jars;
-hive> add jar hdfs:///shared/jars/uap-clj-hiveudf-0.3.0-standalone.jar;
-converting to local hdfs:///shared/jars/uap-clj-hiveudf-0.3.0-standalone.jar
-Added [/tmp/e34eeeef-1af2-4af2-a92d-c2df813deb00_resources/uap-clj-hiveudf-0.3.0-standalone.jar] to class path
-Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-0.3.0-standalone.jar]
+hive> add jar hdfs:///shared/jars/uap-clj-hiveudf-1.0.0-standalone.jar;
+converting to local hdfs:///shared/jars/uap-clj-hiveudf-1.0.0-standalone.jar
+Added [/tmp/e34eeeef-1af2-4af2-a92d-c2df813deb00_resources/uap-clj-hiveudf-1.0.0-standalone.jar] to class path
+Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-1.0.0-standalone.jar]
 hive> list jars;
-/tmp/e34eeeef-1af2-4af2-a92d-c2df813deb00_resources/uap-clj-hiveudf-0.3.0-standalone.jar
+/tmp/e34eeeef-1af2-4af2-a92d-c2df813deb00_resources/uap-clj-hiveudf-1.0.0-standalone.jar
 ```
 
 Register your functions with names of your choice:
