@@ -1,2 +1,2 @@
 language: clojure
-script: lein clean && lein compile && lein spec --reporter=c
+script: lein spec --reporter=c
