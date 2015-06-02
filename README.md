@@ -4,6 +4,20 @@ An Apache Hadoop Hive Simple UDF wrapper around the [`uap-clj`](https://github.c
 
 ##Setup
 
+###Run test suite
+
+```bash
+→ lein clean && lein spec --reporter=c
+Compiling uap-clj.udf.hive.browser
+Compiling uap-clj.udf.hive.device
+Compiling uap-clj.udf.hive.os
+
+Ran 24 tests containing 24 assertions.
+0 failures, 0 errors.
+```
+
+###Deploy artifact(s) to Hadoop
+
 ```bash
 → lein clean && lein uberjar
 Retrieving uap-clj/uap-clj/1.0.0/uap-clj-1.0.0.pom from clojars
