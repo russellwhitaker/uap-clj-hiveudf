@@ -9,7 +9,7 @@
   (let [browser-parser (uap-clj.udf.hive.Browser.)
         ua (Text. unknown-useragent)
         [expected-family expected-major expected-minor expected-patch]
-          (s/split "Other\t<empty>\t<empty>\t<empty>" #"\t")
+          (s/split "Other\t\t\t" #"\t")
         [actual-family actual-major actual-minor actual-patch]
           (s/split (str (#'-evaluate browser-parser ua)) #"\t")]
     (describe (format "A user agent '%s'" known-useragent)

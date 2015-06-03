@@ -9,7 +9,7 @@
   (let [os-parser (uap-clj.udf.hive.OS.)
         ua (Text. unknown-useragent)
         [expected-family expected-major expected-minor expected-patch expected-patch-minor]
-          (s/split "Other\t<empty>\t<empty>\t<empty>\t<empty>" #"\t")
+          (s/split "Other\t\t\t\t" #"\t")
         [actual-family actual-major actual-minor actual-patch actual-patch-minor]
           (s/split (str (#'-evaluate os-parser ua)) #"\t")]
     (describe (format "A user agent '%s'" known-useragent)

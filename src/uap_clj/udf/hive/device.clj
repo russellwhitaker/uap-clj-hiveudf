@@ -25,7 +25,7 @@
     (Text.
       (try
         (let [ua (extract-device-fields (.toString s) regexes-device)]
-          (str (or (get ua :family nil) "<empty>") \tab
-               (or (get ua :brand nil) "<empty>") \tab
-               (or (get ua :model nil) "<empty>")))
+          (str (or (get ua :family nil) "") \tab
+               (or (get ua :brand nil) "") \tab
+               (or (get ua :model nil) "")))
       (catch Exception e (str (.getMessage e) ": " (.toString s)))))))

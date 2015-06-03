@@ -107,16 +107,19 @@ Note that we've left off a FIELDS TERMINATED BY specification, since each line c
 Assuming you've moved a source text file (or several) to `hdfs:///shared/data/raw/useragent`, you should see a populated external table the size of the number of lines in your source file:
 
 ```sql
-0: jdbc:hive2://example.com:> select count(*) from raw_useragent;
+0: jdbc:hive2://example.com:> select count(*) as rowcount from raw_useragent;
 [SNIP]
-INFO  : MapReduce Total cumulative CPU time: 2 seconds 840 msec
-INFO  : Ended Job = job_1432342545485_0004
-+-------+--+
-|  _c0  |
-+-------+--+
-| 6832  |
-+-------+--+
-1 row selected (19.442 seconds)
+INFO  : 2015-06-03 03:12:57,478 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2015-06-03 03:13:03,704 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.53 sec
+INFO  : 2015-06-03 03:13:09,917 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.95 sec
+INFO  : MapReduce Total cumulative CPU time: 2 seconds 950 msec
+INFO  : Ended Job = job_1432342545485_0007
++-----------+--+
+| rowcount  |
++-----------+--+
+| 6832      |
++-----------+--+
+1 row selected (19.59 seconds)
 ```
 
 Now you're ready to play with your data and try out your UDFs:
@@ -128,21 +131,21 @@ Now you're ready to play with your data and try out your UDFs:
 . . . . . . . . . . . . . .>   device(agent) AS device
 . . . . . . . . . . . . . .> FROM raw_useragent
 . . . . . . . . . . . . . .> LIMIT 10;
-+----------------------------------------------------------------------------------------------------------------------------------+------------------+----------------------------------------+------------------------+--+
-|                                                              agent                                                               |     browser      |                   os                   |         device         |
-+----------------------------------------------------------------------------------------------------------------------------------+------------------+----------------------------------------+------------------------+--+
-| AppleWebKit/531.0 (KHTML, like Gecko) Chrome/1111100111 Safari/531.0                                                             | Safari			        | Other	<empty>	<empty>	<empty>	<empty>  | Other	<empty>	<empty>  |
-| Chrome/15.0.860.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/15.0.860.0               | Chrome	15	0	860  | Windows Vista				                      | Other	<empty>	<empty>  |
-| Iron/2.0.168.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/530.1 (KHTML, like Gecko)                                         | Iron	2	0	168     | Windows 7				                          | Other	<empty>	<empty>  |
-| MMozilla/5.0 (Windows NT 6.0) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30 ChromePlus/1.6.3.0alpha4  | Chrome	12	0	742  | Windows Vista				                      | Other	<empty>	<empty>  |
-| Mozilla/1.22 (compatible; MSIE 10.0; Windows 3.1)                                                                                | IE	10	0	         | Windows 3.1				                        | Other	<empty>	<empty>  |
-| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1)                                                                    | IE	7	0	          | Windows XP				                         | Other	<empty>	<empty>  |
-| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1; .NET CLR 3.0.04506.30)                                             | IE	7	0	          | Windows XP				                         | Other	<empty>	<empty>  |
-| Mozilla/4.0 (Windows; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                                         | IE	7	0	          | Windows XP				                         | Other	<empty>	<empty>  |
-| Mozilla/4.0 (compatible; Crawler; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                             | Crawler			       | Windows XP				                         | Spider	Spider	Desktop  |
-| Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)                                                                 | IE	10	0	         | Windows 7				                          | Other	<empty>	<empty>  |
-+----------------------------------------------------------------------------------------------------------------------------------+------------------+----------------------------------------+------------------------+--+
-10 rows selected (0.979 seconds)
++----------------------------------------------------------------------------------------------------------------------------------+------------------+--------------------+------------------------+--+
+|                                                              agent                                                               |     browser      |         os         |         device         |
++----------------------------------------------------------------------------------------------------------------------------------+------------------+--------------------+------------------------+--+
+| AppleWebKit/531.0 (KHTML, like Gecko) Chrome/1111100111 Safari/531.0                                                             | Safari			        | Other				          | Other		                |
+| Chrome/15.0.860.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/15.0.860.0               | Chrome	15		860  | Windows Vista				  | Other		                |
+| Iron/2.0.168.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/530.1 (KHTML, like Gecko)                                         | Iron	2		168     | Windows 7				      | Other		                |
+| MMozilla/5.0 (Windows NT 6.0) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30 ChromePlus/1.6.3.0alpha4  | Chrome	12		742  | Windows Vista				  | Other		                |
+| Mozilla/1.22 (compatible; MSIE 10.0; Windows 3.1)                                                                                | IE	10	0	         | Windows 3.1				    | Other		                |
+| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1)                                                                    | IE	7	0	          | Windows XP				     | Other		                |
+| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1; .NET CLR 3.0.04506.30)                                             | IE	7	0	          | Windows XP				     | Other		                |
+| Mozilla/4.0 (Windows; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                                         | IE	7	0	          | Windows XP				     | Other		                |
+| Mozilla/4.0 (compatible; Crawler; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                             | Crawler			       | Windows XP				     | Spider	Spider	Desktop  |
+| Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)                                                                 | IE	10	0	         | Windows 7				      | Other		                |
++----------------------------------------------------------------------------------------------------------------------------------+------------------+--------------------+------------------------+--+
+10 rows selected (0.88 seconds)
 ```
 
 See that three output columns are specified in the query, but what looks like twelve columns are displayed: that's because each of the UDFs - `browser()`, `os()`, and `device()` - returns a simple Hive Text object comprising several strings concatenated by non-printing tab characters. To store these values cleanly and usably, you might consider creating a target table containing the outputs of the UDFs split on the embedded tab delimiters stored in columns of Hive `array<string>` type, e.g.:
@@ -193,21 +196,21 @@ Finally, you have a data source set up for use in useragent analytics:
 
 ```sql
 0: jdbc:hive2://example.com:> select * from processed_useragent limit 10;
-+----------------------------------------------------------------------------------------------------------------------------------+------------------------------+----------------------------------------------------+--------------------------------+--+
-|                                                    processed_useragent.agent                                                     | processed_useragent.browser  |               processed_useragent.os               |   processed_useragent.device   |
-+----------------------------------------------------------------------------------------------------------------------------------+------------------------------+----------------------------------------------------+--------------------------------+--+
-| AppleWebKit/531.0 (KHTML, like Gecko) Chrome/1111100111 Safari/531.0                                                             | ["Safari","","",""]          | ["Other","<empty>","<empty>","<empty>","<empty>"]  | ["Other","<empty>","<empty>"]  |
-| Chrome/15.0.860.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/15.0.860.0               | ["Chrome","15","0","860"]    | ["Windows Vista","","","",""]                      | ["Other","<empty>","<empty>"]  |
-| Iron/2.0.168.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/530.1 (KHTML, like Gecko)                                         | ["Iron","2","0","168"]       | ["Windows 7","","","",""]                          | ["Other","<empty>","<empty>"]  |
-| MMozilla/5.0 (Windows NT 6.0) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30 ChromePlus/1.6.3.0alpha4  | ["Chrome","12","0","742"]    | ["Windows Vista","","","",""]                      | ["Other","<empty>","<empty>"]  |
-| Mozilla/1.22 (compatible; MSIE 10.0; Windows 3.1)                                                                                | ["IE","10","0",""]           | ["Windows 3.1","","","",""]                        | ["Other","<empty>","<empty>"]  |
-| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1)                                                                    | ["IE","7","0",""]            | ["Windows XP","","","",""]                         | ["Other","<empty>","<empty>"]  |
-| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1; .NET CLR 3.0.04506.30)                                             | ["IE","7","0",""]            | ["Windows XP","","","",""]                         | ["Other","<empty>","<empty>"]  |
-| Mozilla/4.0 (Windows; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                                         | ["IE","7","0",""]            | ["Windows XP","","","",""]                         | ["Other","<empty>","<empty>"]  |
-| Mozilla/4.0 (compatible; Crawler; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                             | ["Crawler","","",""]         | ["Windows XP","","","",""]                         | ["Spider","Spider","Desktop"]  |
-| Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)                                                                 | ["IE","10","0",""]           | ["Windows 7","","","",""]                          | ["Other","<empty>","<empty>"]  |
-+----------------------------------------------------------------------------------------------------------------------------------+------------------------------+----------------------------------------------------+--------------------------------+--+
-10 rows selected (1.119 seconds)
++----------------------------------------------------------------------------------------------------------------------------------+------------------------------+--------------------------------+--------------------------------+--+
+|                                                    processed_useragent.agent                                                     | processed_useragent.browser  |     processed_useragent.os     |   processed_useragent.device   |
++----------------------------------------------------------------------------------------------------------------------------------+------------------------------+--------------------------------+--------------------------------+--+
+| AppleWebKit/531.0 (KHTML, like Gecko) Chrome/1111100111 Safari/531.0                                                             | ["Safari","","",""]          | ["Other","","","",""]          | ["Other","",""]                |
+| Chrome/15.0.860.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/15.0.860.0               | ["Chrome","15","0","860"]    | ["Windows Vista","","","",""]  | ["Other","",""]                |
+| Iron/2.0.168.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/530.1 (KHTML, like Gecko)                                         | ["Iron","2","0","168"]       | ["Windows 7","","","",""]      | ["Other","",""]                |
+| MMozilla/5.0 (Windows NT 6.0) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30 ChromePlus/1.6.3.0alpha4  | ["Chrome","12","0","742"]    | ["Windows Vista","","","",""]  | ["Other","",""]                |
+| Mozilla/1.22 (compatible; MSIE 10.0; Windows 3.1)                                                                                | ["IE","10","0",""]           | ["Windows 3.1","","","",""]    | ["Other","",""]                |
+| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1)                                                                    | ["IE","7","0",""]            | ["Windows XP","","","",""]     | ["Other","",""]                |
+| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1; .NET CLR 3.0.04506.30)                                             | ["IE","7","0",""]            | ["Windows XP","","","",""]     | ["Other","",""]                |
+| Mozilla/4.0 (Windows; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                                         | ["IE","7","0",""]            | ["Windows XP","","","",""]     | ["Other","",""]                |
+| Mozilla/4.0 (compatible; Crawler; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                             | ["Crawler","","",""]         | ["Windows XP","","","",""]     | ["Spider","Spider","Desktop"]  |
+| Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)                                                                 | ["IE","10","0",""]           | ["Windows 7","","","",""]      | ["Other","",""]                |
++----------------------------------------------------------------------------------------------------------------------------------+------------------------------+--------------------------------+--------------------------------+--+
+10 rows selected (0.642 seconds)
 ```
 
 From this point, you can extract fields of interest in your reports following a variation of this basic pattern:
@@ -230,18 +233,18 @@ From this point, you can extract fields of interest in your reports following a 
 +----------------------------------------------------------------------------------------------------------------------------------+-----------------+----------------+----------------+----------------+----------------+-----------+-----------+-----------+-----------------+----------------+---------------+---------------+--+
 |                                                           logged_agent                                                           | browser_family  | browser_major  | browser_minor  | browser_patch  |   os_family    | os_major  | os_minor  | os_patch  | os_patch_minor  | device_family  | device_brand  | device_model  |
 +----------------------------------------------------------------------------------------------------------------------------------+-----------------+----------------+----------------+----------------+----------------+-----------+-----------+-----------+-----------------+----------------+---------------+---------------+--+
-| AppleWebKit/531.0 (KHTML, like Gecko) Chrome/1111100111 Safari/531.0                                                             | Safari          |                |                |                | Other          | <empty>   | <empty>   | <empty>   | <empty>         | Other          | <empty>       | <empty>       |
-| Chrome/15.0.860.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/15.0.860.0               | Chrome          | 15             | 0              | 860            | Windows Vista  |           |           |           |                 | Other          | <empty>       | <empty>       |
-| Iron/2.0.168.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/530.1 (KHTML, like Gecko)                                         | Iron            | 2              | 0              | 168            | Windows 7      |           |           |           |                 | Other          | <empty>       | <empty>       |
-| MMozilla/5.0 (Windows NT 6.0) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30 ChromePlus/1.6.3.0alpha4  | Chrome          | 12             | 0              | 742            | Windows Vista  |           |           |           |                 | Other          | <empty>       | <empty>       |
-| Mozilla/1.22 (compatible; MSIE 10.0; Windows 3.1)                                                                                | IE              | 10             | 0              |                | Windows 3.1    |           |           |           |                 | Other          | <empty>       | <empty>       |
-| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1)                                                                    | IE              | 7              | 0              |                | Windows XP     |           |           |           |                 | Other          | <empty>       | <empty>       |
-| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1; .NET CLR 3.0.04506.30)                                             | IE              | 7              | 0              |                | Windows XP     |           |           |           |                 | Other          | <empty>       | <empty>       |
-| Mozilla/4.0 (Windows; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                                         | IE              | 7              | 0              |                | Windows XP     |           |           |           |                 | Other          | <empty>       | <empty>       |
+| AppleWebKit/531.0 (KHTML, like Gecko) Chrome/1111100111 Safari/531.0                                                             | Safari          |                |                |                | Other          |           |           |           |                 | Other          |               |               |
+| Chrome/15.0.860.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/15.0.860.0               | Chrome          | 15             | 0              | 860            | Windows Vista  |           |           |           |                 | Other          |               |               |
+| Iron/2.0.168.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/530.1 (KHTML, like Gecko)                                         | Iron            | 2              | 0              | 168            | Windows 7      |           |           |           |                 | Other          |               |               |
+| MMozilla/5.0 (Windows NT 6.0) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30 ChromePlus/1.6.3.0alpha4  | Chrome          | 12             | 0              | 742            | Windows Vista  |           |           |           |                 | Other          |               |               |
+| Mozilla/1.22 (compatible; MSIE 10.0; Windows 3.1)                                                                                | IE              | 10             | 0              |                | Windows 3.1    |           |           |           |                 | Other          |               |               |
+| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1)                                                                    | IE              | 7              | 0              |                | Windows XP     |           |           |           |                 | Other          |               |               |
+| Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1; .NET CLR 3.0.04506.30)                                             | IE              | 7              | 0              |                | Windows XP     |           |           |           |                 | Other          |               |               |
+| Mozilla/4.0 (Windows; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                                         | IE              | 7              | 0              |                | Windows XP     |           |           |           |                 | Other          |               |               |
 | Mozilla/4.0 (compatible; Crawler; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)                                             | Crawler         |                |                |                | Windows XP     |           |           |           |                 | Spider         | Spider        | Desktop       |
-| Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)                                                                 | IE              | 10             | 0              |                | Windows 7      |           |           |           |                 | Other          | <empty>       | <empty>       |
+| Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)                                                                 | IE              | 10             | 0              |                | Windows 7      |           |           |           |                 | Other          |               |               |
 +----------------------------------------------------------------------------------------------------------------------------------+-----------------+----------------+----------------+----------------+----------------+-----------+-----------+-----------+-----------------+----------------+---------------+---------------+--+
-10 rows selected (1.475 seconds)
+10 rows selected (1.827 seconds)
 ```
 
 ## Future / Enhancements
@@ -250,6 +253,7 @@ What's up next:
 
 1. Re-implement UDFs as GenericUDFs;
 2. Add memoization and/or LRU caching after various performance tests;
+3. Replace BDD tests with test generators using ua-parser/uap-core fixtures.
 
 Pull requests will be very happily considered.
 

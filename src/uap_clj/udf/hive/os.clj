@@ -28,9 +28,9 @@
     (Text.
       (try
         (let [ua (extract-os-fields (.toString s) regexes-os)]
-          (str (or (get ua :family nil) "<empty>") \tab
-               (or (get ua :major nil) "<empty>") \tab
-               (or (get ua :minor nil) "<empty>") \tab
-               (or (get ua :patch nil) "<empty>") \tab
-               (or (get ua :patch_minor nil) "<empty>")))
+          (str (or (get ua :family nil) "") \tab
+               (or (get ua :major nil) "") \tab
+               (or (get ua :minor nil) "") \tab
+               (or (get ua :patch nil) "") \tab
+               (or (get ua :patch_minor nil) "")))
       (catch Exception e (str (.getMessage e) ": " (.toString s)))))))

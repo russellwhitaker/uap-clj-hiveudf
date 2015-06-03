@@ -9,7 +9,7 @@
   (let [device-parser (uap-clj.udf.hive.Device.)
         ua (Text. unknown-useragent)
         [expected-family expected-brand expected-model]
-          (s/split "Other\t<empty>\t<empty>" #"\t")
+          (s/split "Other\t\t" #"\t")
         [actual-family actual-brand actual-model]
           (s/split (str (#'-evaluate device-parser ua)) #"\t")]
     (describe (format "A user agent '%s'" known-useragent)
