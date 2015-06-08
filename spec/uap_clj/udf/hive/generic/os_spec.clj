@@ -1,18 +1,22 @@
-(ns uap-clj.udf.hive.os-spec
-  (:import [org.apache.hadoop.io Text])
+(ns uap-clj.udf.hive.generic.os-spec
+  (:import [org.apache.hadoop.io Text]
+           [org.apache.hadoop.hive.ql.udf.generic GenericUDF$DeferredObject
+                                                  GenericUDF$DeferredJavaObject])
   (:require [speclj.core :refer :all]
-            [clojure.string :as s]
             [uap-clj.udf.hive.common-spec :refer :all]
-            [uap-clj.udf.hive.os :refer [-evaluate]]))
+            [uap-clj.udf.hive.generic.os :refer [-evaluate]]))
 
 (context "Unknown O/S"
-  (let [os-parser (uap-clj.udf.hive.OS.)
-        ua (Text. unknown-useragent)
+  (let [os-parser (uap-clj.udf.hive.generic.OS.)
+        deferred-args (into-array GenericUDF$DeferredObject
+                                  [(GenericUDF$DeferredJavaObject.
+                                     unknown-useragent)])
+        result (.evaluate os-parser deferred-args)
         [expected-family expected-major expected-minor expected-patch expected-patch-minor]
-          (s/split "Other\t\t\t\t" #"\t")
+          ["Other" "" "" "" ""]
         [actual-family actual-major actual-minor actual-patch actual-patch-minor]
-          (s/split (str (#'-evaluate os-parser ua)) #"\t")]
-    (describe (format "A user agent '%s'" known-useragent)
+          (map #(.toString %) (into-array Text result))]
+    (describe (format "A user agent '%s'" unknown-useragent)
       (it (format "is categorized as family '%s'" expected-family)
         (should= expected-family actual-family))
       (it (format "is categorized as major '%s'" expected-major)
@@ -22,15 +26,18 @@
       (it (format "is categorized as patch '%s'" expected-patch)
         (should= expected-patch actual-patch))
       (it (format "is categorized as patch_minor '%s'" expected-patch-minor)
-        (should= expected-patch-minor actual-patch-minor)))))
+        (should= expected-patch actual-patch-minor)))))
 
 (context "Known O/S"
-  (let [os-parser (uap-clj.udf.hive.OS.)
-        ua (Text. known-useragent)
+  (let [os-parser (uap-clj.udf.hive.generic.OS.)
+        deferred-args (into-array GenericUDF$DeferredObject
+                                  [(GenericUDF$DeferredJavaObject.
+                                     known-useragent)])
+        result (.evaluate os-parser deferred-args)
         [expected-family expected-major expected-minor expected-patch expected-patch-minor]
-          (s/split "Windows XP\t\t\t\t" #"\t")
+          ["Windows XP" "" "" "" ""]
         [actual-family actual-major actual-minor actual-patch actual-patch-minor]
-          (s/split (str (#'-evaluate os-parser ua)) #"\t")]
+          (map #(.toString %) (into-array Text result))]
     (describe (format "A user agent '%s'" known-useragent)
       (it (format "is categorized as family '%s'" expected-family)
         (should= expected-family actual-family))
@@ -41,4 +48,4 @@
       (it (format "is categorized as patch '%s'" expected-patch)
         (should= expected-patch actual-patch))
       (it (format "is categorized as patch_minor '%s'" expected-patch-minor)
-        (should= expected-patch-minor actual-patch-minor)))))
+        (should= expected-patch actual-patch-minor)))))
