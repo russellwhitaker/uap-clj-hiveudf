@@ -6,7 +6,8 @@
   :scm {:name "git"
         :url "https://github.com/russellwhitaker/uap-clj-hiveudf"}
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [uap-clj "1.0.0"]]
+                 [uap-clj "1.0.0"]
+                 [com.esotericsoftware/kryo "3.0.1"]]
   :profiles {:provided
                {:dependencies
                  [[org.apache.hive/hive-exec "0.12.0"]

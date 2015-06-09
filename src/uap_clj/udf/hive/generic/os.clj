@@ -5,7 +5,8 @@
            [java.util ArrayList]
            [org.apache.hadoop.io Text]
            [org.apache.hadoop.hive.serde2.objectinspector ObjectInspectorFactory]
-           [org.apache.hadoop.hive.ql.exec Description])
+           [org.apache.hadoop.hive.ql.exec Description]
+           [com.esotericsoftware.kryo DefaultSerializer])
   (:require [uap-clj.core :refer [extract-os-fields regexes-os]]
             [uap-clj.udf.hive.generic.common :refer [os-fieldnames
                                                      check-arguments
@@ -15,7 +16,9 @@
            org.apache.hadoop.hive.ql.exec.Description
              {:name "os"
               :value "Takes a useragent & returns struct<family,major,minor,patch,patch_minor>"
-              :extended "(type: struct<family:string,major:string,minor:string,patch:string,patch_minor:string>)"}}
+              :extended "(type: struct<family:string,major:string,minor:string,patch:string,patch_minor:string>)"}
+           com.esotericsoftware.kryo.DefaultSerializer
+             {:value kryo.ext.GenericUDFSerializer}}
          uap-clj.udf.hive.generic.OS
    :extends org.apache.hadoop.hive.ql.udf.generic.GenericUDF
    :init init
