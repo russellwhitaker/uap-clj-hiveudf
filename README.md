@@ -4,7 +4,9 @@ An Apache Hadoop Hive GenericUDF wrapper around the [`uap-clj`](https://github.c
 
 ##Setup
 
-###Run test suite
+###Running the test suite (for developers)
+
+This project uses [`speclj`](http://speclj.com). The core test suite comprises almost entirely test generators built from reading in test fixtures from the [`ua-parser/uap-core`](https://github.com/ua-parser/uap-core) repository, which themselves are pulled into the local workspace as dependencies using [`tobyhede/lein-git-deps`](https://github.com/tobyhede/lein-git-deps).
 
 ```bash
 → lein clean && lein spec --reporter=c
@@ -13,7 +15,7 @@ Compiling uap-clj.udf.hive.generic.common
 Compiling uap-clj.udf.hive.generic.device
 Compiling uap-clj.udf.hive.generic.os
 
-Ran 24 tests containing 24 assertions.
+Ran 53383 tests containing 53383 assertions.
 0 failures, 0 errors.
 ```
 

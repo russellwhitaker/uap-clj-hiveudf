@@ -13,7 +13,12 @@
                  [org.apache.hive/hive-serde "0.12.0"]
                  [org.apache.hadoop/hadoop-core "1.2.1"]]}
              :dev
-               {:dependencies [[speclj "3.2.0"]]}}
-  :plugins [[speclj "3.2.0"]]
+               {:dependencies [[speclj "3.2.0"]
+                               [lein-git-deps "0.0.2-SNAPSHOT"]]}}
+  :plugins [[lein-git-deps "0.0.2-SNAPSHOT"]
+            [speclj "3.2.0"]]
+  :git-dependencies [["https://github.com/ua-parser/uap-core.git"]]
+  :resource-paths [".lein-git-deps/uap-core"]
+  :jvm-opts ["-Xss2m"]
   :test-paths ["spec"]
   :aot :all)
