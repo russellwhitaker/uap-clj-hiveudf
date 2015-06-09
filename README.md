@@ -192,10 +192,6 @@ You can also pull values out of the browser, os, or device structs, e.g.:
 
 ## Future / Enhancements
 
-What's up next:
-
-1. Replace BDD tests with test generators using ua-parser/uap-core fixtures.
-
 Pull requests will be very happily considered.
 
 __Maintained by Russell Whitaker__
