@@ -6,7 +6,7 @@
            [org.apache.hadoop.io Text]
            [org.apache.hadoop.hive.serde2.objectinspector ObjectInspectorFactory]
            [org.apache.hadoop.hive.ql.exec Description]
-           [com.esotericsoftware.kryo DefaultSerializer])
+           [org.apache.hive.com.esotericsoftware.kryo DefaultSerializer])
   (:require [uap-clj.core :refer [extract-device-fields regexes-device]]
             [uap-clj.udf.hive.generic.common :refer [device-fieldnames
                                                      check-arguments
@@ -17,7 +17,7 @@
              {:name "device"
               :value "Takes a useragent & returns struct<family,brand,model>"
               :extended "(type: struct<family:string,brand:string,model:string>)"}
-           com.esotericsoftware.kryo.DefaultSerializer
+           org.apache.hive.com.esotericsoftware.kryo.DefaultSerializer
              {:value kryo.ext.GenericUDFSerializer}}
          uap-clj.udf.hive.generic.Device
    :extends org.apache.hadoop.hive.ql.udf.generic.GenericUDF

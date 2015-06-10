@@ -1,12 +1,17 @@
 ;;;
-;;; This code adapted from a sample courtesy of Dr. Christian Betz.
+;;; Adapted from a sample courtesy of Dr. Christian Betz
+;;; http://twitter.com/Chris_Betz
+;;;
+;;; Why this is necessary:
+;;;   https://issues.apache.org/jira/browse/HIVE-7711
+;;;   "Error Serializing GenericUDF"
 ;;;
 (ns kryo-ext.genericudf-serializer
-  (:import [com.esotericsoftware.kryo Kryo]
-           [com.esotericsoftware.kryo.io Output Input])
+  (:import [org.apache.hive.com.esotericsoftware.kryo Kryo]
+           [org.apache.hive.com.esotericsoftware.kryo.io Output Input])
   (:gen-class
    :name kryo.ext.GenericUDFSerializer
-   :extends com.esotericsoftware.kryo.Serializer))
+   :extends org.apache.hive.com.esotericsoftware.kryo.Serializer))
 
 (defn -write
   [_ ^Kryo _ ^Output _ _]
