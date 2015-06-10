@@ -1,5 +1,5 @@
 (defproject uap-clj-hiveudf "1.0.0"
-  :description "Apache Hadoop Hive SimpleUDF wrapper around uap-clj"
+  :description "Apache Hadoop Hive GenericUDF wrapper around uap-clj"
   :url "https://github.com/russellwhitaker/uap-clj-hiveudf"
   :license {:name "The MIT License (MIT)"
             :url "http://www.opensource.org/licenses/mit-license.php"}
