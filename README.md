@@ -23,7 +23,7 @@ Ran 53383 tests containing 53383 assertions.
 
 Add this to the `:dependencies` stanza of your `project.clj`:
 
-[![Clojars Project](http://clojars.org/uap-clj-hiveudf/latest-version.svg)]
+![Clojars Project](http://clojars.org/uap-clj-hiveudf/latest-version.svg)
 
 ##Operational deployment
 
