@@ -2,9 +2,9 @@
 
 An Apache Hadoop Hive GenericUDF wrapper around the [`uap-clj`](https://github.com/russellwhitaker/uap-clj) library providing Browser, O/S, and Device field extraction functions.
 
-##Setup
+##Setup for development (optional)
 
-###Running the test suite (for developers)
+###Running the test suite
 
 This project uses [`speclj`](http://speclj.com). The core test suite comprises almost entirely test generators built from reading in test fixtures from the [`ua-parser/uap-core`](https://github.com/ua-parser/uap-core) repository, which themselves are pulled into the local workspace as dependencies using [`tobyhede/lein-git-deps`](https://github.com/tobyhede/lein-git-deps).
 
@@ -18,6 +18,14 @@ Compiling uap-clj.udf.hive.generic.os
 Ran 53383 tests containing 53383 assertions.
 0 failures, 0 errors.
 ```
+
+###Including in your project
+
+Add this to the `:dependencies` stanza of your `project.clj`:
+
+[![Clojars Project](http://clojars.org/uap-clj-hiveudf/latest-version.svg)]
+
+##Operational deployment
 
 ###Deploy artifact(s) to Hadoop
 
