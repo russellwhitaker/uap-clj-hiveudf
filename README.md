@@ -10,12 +10,13 @@ This project uses [`speclj`](http://speclj.com). The core test suite comprises a
 
 ```bash
 → lein clean && lein spec --reporter=c
+Compiling kryo-ext.genericudf-serializer
 Compiling uap-clj.udf.hive.generic.browser
 Compiling uap-clj.udf.hive.generic.common
 Compiling uap-clj.udf.hive.generic.device
 Compiling uap-clj.udf.hive.generic.os
 
-Ran 53383 tests containing 53383 assertions.
+Ran 53403 tests containing 53403 assertions.
 0 failures, 0 errors.
 ```
 
@@ -31,14 +32,14 @@ Add this to the `:dependencies` stanza of your `project.clj`:
 
 ```bash
 → lein clean && lein uberjar
-Retrieving uap-clj/uap-clj/1.0.0/uap-clj-1.0.0.pom from clojars
-Retrieving uap-clj/uap-clj/1.0.0/uap-clj-1.0.0.jar from clojars
+Retrieving uap-clj/uap-clj/1.0.1/uap-clj-1.0.1.pom from clojars
+Retrieving uap-clj/uap-clj/1.0.1/uap-clj-1.0.1.jar from clojars
 Compiling uap-clj.udf.hive.generic.browser
 Compiling uap-clj.udf.hive.generic.common
 Compiling uap-clj.udf.hive.generic.device
 Compiling uap-clj.udf.hive.generic.os
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.0.jar
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.0-standalone.jar
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.1.jar
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.1-standalone.jar
 ```
 
 Copy one or both of these artifacts to a preferred location in HDFS (e.g. `hdfs:///shared/jars`).
@@ -67,17 +68,17 @@ Beeline version 1.0.0 by Apache Hive
 +-----------+--+
 No rows selected (1.047 seconds)
 
-0: jdbc:hive2://example.com:> add jar hdfs:///shared/jars/uap-clj-hiveudf-1.0.0-standalone.jar;
-INFO  : converting to local hdfs:///shared/jars/uap-clj-hiveudf-1.0.0-standalone.jar
-INFO  : Added [/tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.0-standalone.jar] to class path
-INFO  : Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-1.0.0-standalone.jar]
+0: jdbc:hive2://example.com:> add jar hdfs:///shared/jars/uap-clj-hiveudf-1.0.1-standalone.jar;
+INFO  : converting to local hdfs:///shared/jars/uap-clj-hiveudf-1.0.1-standalone.jar
+INFO  : Added [/tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.1-standalone.jar] to class path
+INFO  : Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-1.0.1-standalone.jar]
 No rows affected (0.864 seconds)
 
 0: jdbc:hive2://example.com:> list jars;
 +-------------------------------------------------------------------------------------------+--+
 |                                         resource                                          |
 +-------------------------------------------------------------------------------------------+--+
-| /tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.0-standalone.jar  |
+| /tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.1-standalone.jar  |
 +-------------------------------------------------------------------------------------------+--+
 1 row selected (1.417 seconds)
 ```
