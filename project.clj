@@ -1,4 +1,4 @@
-(defproject uap-clj-hiveudf "1.0.2"
+(defproject uap-clj-hiveudf "1.0.3"
   :description "Apache Hadoop Hive GenericUDF wrapper around uap-clj"
   :url "https://github.com/russellwhitaker/uap-clj-hiveudf"
   :license {:name "The MIT License (MIT)"
@@ -6,7 +6,7 @@
   :scm {:name "git"
         :url "https://github.com/russellwhitaker/uap-clj-hiveudf"}
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [uap-clj "1.0.2"]]
+                 [uap-clj "1.0.3"]]
   :exclusions [org.apache.hadoop/hadoop-core
                org.apache.hadoop/hadoop-common
                org.apache.hadoop/hadoop-hdfs]
