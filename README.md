@@ -16,7 +16,7 @@ Compiling uap-clj.udf.hive.generic.common
 Compiling uap-clj.udf.hive.generic.device
 Compiling uap-clj.udf.hive.generic.os
 
-Ran 53403 tests containing 53403 assertions.
+Ran 53668 tests containing 53668 assertions.
 0 failures, 0 errors.
 ```
 
@@ -32,14 +32,14 @@ Add this to the `:dependencies` stanza of your `project.clj`:
 
 ```bash
 → lein clean && lein uberjar
-Retrieving uap-clj/uap-clj/1.0.1/uap-clj-1.0.1.pom from clojars
-Retrieving uap-clj/uap-clj/1.0.1/uap-clj-1.0.1.jar from clojars
+Retrieving uap-clj/uap-clj/1.0.3/uap-clj-1.0.3.pom from clojars
+Retrieving uap-clj/uap-clj/1.0.3/uap-clj-1.0.3.jar from clojars
 Compiling uap-clj.udf.hive.generic.browser
 Compiling uap-clj.udf.hive.generic.common
 Compiling uap-clj.udf.hive.generic.device
 Compiling uap-clj.udf.hive.generic.os
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.1.jar
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.1-standalone.jar
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.3.jar
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.0.3-standalone.jar
 ```
 
 Copy one or both of these artifacts to a preferred location in HDFS (e.g. `hdfs:///shared/jars`).
@@ -68,17 +68,17 @@ Beeline version 1.0.0 by Apache Hive
 +-----------+--+
 No rows selected (1.047 seconds)
 
-0: jdbc:hive2://example.com:> add jar hdfs:///shared/jars/uap-clj-hiveudf-1.0.1-standalone.jar;
-INFO  : converting to local hdfs:///shared/jars/uap-clj-hiveudf-1.0.1-standalone.jar
-INFO  : Added [/tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.1-standalone.jar] to class path
-INFO  : Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-1.0.1-standalone.jar]
+0: jdbc:hive2://example.com:> add jar hdfs:///shared/jars/uap-clj-hiveudf-1.0.3-standalone.jar;
+INFO  : converting to local hdfs:///shared/jars/uap-clj-hiveudf-1.0.3-standalone.jar
+INFO  : Added [/tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.3-standalone.jar] to class path
+INFO  : Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-1.0.3-standalone.jar]
 No rows affected (0.864 seconds)
 
 0: jdbc:hive2://example.com:> list jars;
 +-------------------------------------------------------------------------------------------+--+
 |                                         resource                                          |
 +-------------------------------------------------------------------------------------------+--+
-| /tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.1-standalone.jar  |
+| /tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.0.3-standalone.jar  |
 +-------------------------------------------------------------------------------------------+--+
 1 row selected (1.417 seconds)
 ```
@@ -133,9 +133,9 @@ Assuming you've moved a source text file (or several) to `hdfs:///shared/data/ra
 ```sql
 0: jdbc:hive2://example.com:> select count(*) as rowcount from raw_useragent;
 [SNIP]
-INFO  : 2015-06-03 03:12:57,478 Stage-1 map = 0%,  reduce = 0%
-INFO  : 2015-06-03 03:13:03,704 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.53 sec
-INFO  : 2015-06-03 03:13:09,917 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.95 sec
+INFO  : 2015-10-27 03:12:57,478 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2015-10-27 03:13:03,704 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.53 sec
+INFO  : 2015-10-27 03:13:09,917 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.95 sec
 INFO  : MapReduce Total cumulative CPU time: 2 seconds 950 msec
 INFO  : Ended Job = job_1432342545485_0007
 +-----------+--+
