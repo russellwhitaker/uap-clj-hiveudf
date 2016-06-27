@@ -1,2 +1,7 @@
 language: clojure
-script: lein spec --reporter=c
+jdk:
+  - oraclejdk8
+script:
+  - lein eastwood
+  - lein ancient
+  - lein spec --reporter=c

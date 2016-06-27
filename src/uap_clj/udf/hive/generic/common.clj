@@ -27,7 +27,7 @@
                 (.getTypeName (aget object-inspectors 0)))))))
 
 (defn get-struct-field-ois
-  ^ArrayList [fieldnames]
+  ^java.util.ArrayList [fieldnames]
   (ArrayList.
     (vec (take (count fieldnames)
                (repeat PrimitiveObjectInspectorFactory/writableStringObjectInspector)))))
