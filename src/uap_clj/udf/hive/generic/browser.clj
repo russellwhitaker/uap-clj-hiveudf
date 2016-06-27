@@ -7,7 +7,7 @@
            [org.apache.hadoop.hive.serde2.objectinspector ObjectInspectorFactory]
            [org.apache.hadoop.hive.ql.exec Description]
            [org.apache.hive.com.esotericsoftware.kryo DefaultSerializer])
-  (:require [uap-clj.core :refer [extract-browser-fields regexes-browser]]
+  (:require [uap-clj.browser :refer [browser]]
             [uap-clj.udf.hive.generic.common :refer [browser-fieldnames
                                                      check-arguments
                                                      get-struct-field-ois]])
@@ -40,7 +40,7 @@
 (defn -evaluate
   [this #^"[Lorg.apache.hadoop.hive.ql.udf.generic.GenericUDF$DeferredObject;" arguments]
   (when arguments
-    (let [ua (extract-browser-fields (.toString (.get (aget arguments 0))) regexes-browser)]
+    (let [ua (browser (.toString (.get (aget arguments 0))))]
       (object-array (vec (map #(Text. (str (get ua (keyword %) nil))) browser-fieldnames))))))
 
 (defn -getDisplayString

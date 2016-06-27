@@ -7,7 +7,7 @@
            [org.apache.hadoop.hive.serde2.objectinspector ObjectInspectorFactory]
            [org.apache.hadoop.hive.ql.exec Description]
            [org.apache.hive.com.esotericsoftware.kryo DefaultSerializer])
-  (:require [uap-clj.core :refer [extract-device-fields regexes-device]]
+  (:require [uap-clj.device :refer [device]]
             [uap-clj.udf.hive.generic.common :refer [device-fieldnames
                                                      check-arguments
                                                      get-struct-field-ois]])
@@ -40,7 +40,7 @@
 (defn -evaluate
   [this #^"[Lorg.apache.hadoop.hive.ql.udf.generic.GenericUDF$DeferredObject;" arguments]
   (when arguments
-    (let [ua (extract-device-fields (.toString (.get (aget arguments 0))) regexes-device)]
+    (let [ua (device (.toString (.get (aget arguments 0))))]
       (object-array (vec (map #(Text. (str (get ua (keyword %) nil))) device-fieldnames))))))
 
 (defn -getDisplayString
