@@ -9,15 +9,15 @@ An Apache Hadoop Hive GenericUDF wrapper around the [`uap-clj`](https://github.c
 This project uses [`speclj`](http://speclj.com). The core test suite comprises almost entirely test generators built from reading in test fixtures from the [`ua-parser/uap-core`](https://github.com/ua-parser/uap-core) repository, which themselves are pulled into the local workspace as dependencies using [`tobyhede/lein-git-deps`](https://github.com/tobyhede/lein-git-deps).
 
 ```bash
-→ lein clean && lein spec --reporter=c
+→ lein test
 Compiling kryo-ext.genericudf-serializer
 Compiling uap-clj.udf.hive.generic.browser
 Compiling uap-clj.udf.hive.generic.common
 Compiling uap-clj.udf.hive.generic.device
 Compiling uap-clj.udf.hive.generic.os
 
-Ran 53842 tests containing 53842 assertions.
-0 failures, 0 errors.
+Finished in 0.09364 seconds
+54202 examples, 0 failures
 ```
 
 ###Including in your project
@@ -28,18 +28,18 @@ Add this to the `:dependencies` stanza of your `project.clj`:
 
 ##Operational deployment
 
-###Deploy artifact(s) to Hadoop
+###Deploy artifacts to Hadoop
 
 ```bash
-→ lein clean && lein uberjar
-Retrieving uap-clj/uap-clj/1.2.0/uap-clj-1.2.2.pom from clojars
-Retrieving uap-clj/uap-clj/1.2.0/uap-clj-1.2.2.jar from clojars
+→ lein build
+Retrieving uap-clj/uap-clj/1.3.0/uap-clj-1.3.0.pom from clojars
+Retrieving uap-clj/uap-clj/1.3.0/uap-clj-1.3.0.jar from clojars
 Compiling uap-clj.udf.hive.generic.browser
 Compiling uap-clj.udf.hive.generic.common
 Compiling uap-clj.udf.hive.generic.device
 Compiling uap-clj.udf.hive.generic.os
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.2.2.jar
-Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.2.2-standalone.jar
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.3.0.jar
+Created /Users/<username>/dev/uap-clj-hiveudf/target/uap-clj-hiveudf-1.3.0-standalone.jar
 ```
 
 Copy one or both of these artifacts to a preferred location in HDFS (e.g. `hdfs:///shared/jars`).
@@ -68,17 +68,17 @@ Beeline version 1.0.0 by Apache Hive
 +-----------+--+
 No rows selected (1.047 seconds)
 
-0: jdbc:hive2://example.com:> add jar hdfs:///shared/jars/uap-clj-hiveudf-1.2.2-standalone.jar;
-INFO  : converting to local hdfs:///shared/jars/uap-clj-hiveudf-1.2.2-standalone.jar
-INFO  : Added [/tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.2.2-standalone.jar] to class path
-INFO  : Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-1.2.2-standalone.jar]
+0: jdbc:hive2://example.com:> add jar hdfs:///shared/jars/uap-clj-hiveudf-1.3.0-standalone.jar;
+INFO  : converting to local hdfs:///shared/jars/uap-clj-hiveudf-1.3.0-standalone.jar
+INFO  : Added [/tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.3.0-standalone.jar] to class path
+INFO  : Added resources: [hdfs:///shared/jars/uap-clj-hiveudf-1.3.0-standalone.jar]
 No rows affected (0.864 seconds)
 
 0: jdbc:hive2://example.com:> list jars;
 +-------------------------------------------------------------------------------------------+--+
 |                                         resource                                          |
 +-------------------------------------------------------------------------------------------+--+
-| /tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.2.2-standalone.jar  |
+| /tmp/40a3f76b-d46f-4b45-bf9f-15d6f7a745ba_resources/uap-clj-hiveudf-1.3.0-standalone.jar  |
 +-------------------------------------------------------------------------------------------+--+
 1 row selected (1.417 seconds)
 ```
@@ -198,10 +198,6 @@ You can also pull values out of the browser, os, or device structs, e.g.:
 +----------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+-------------+-----------------------+--+
 10 rows selected (13.715 seconds)
 ```
-
-## Future / Enhancements
-
-Pull requests will be very happily considered.
 
 __Maintained by Russell Whitaker__
 
